@@ -10,7 +10,7 @@ export const Done = () => {
       <ul>
         {task.map((task, i) => (
           <SList key={i}>
-            <Spar>{task}</Spar>
+            <Spar>{task.content}</Spar>
             <SBtn>Back</SBtn>
             <SDBtn>Delete</SDBtn>
           </SList>

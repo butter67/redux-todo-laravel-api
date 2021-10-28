@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteTask } from "../TasksSlice";
 
 export const Undone = () => {
-  const task = useSelector((state) => state.tasks.undone);
+  const task = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
 
+  console.log(task);
   return (
     <STaskArea>
       <STaskttl>Undone Tasks</STaskttl>
@@ -11,7 +14,7 @@ export const Undone = () => {
         {task.map((task, i) => (
           <SList key={i}>
             <Spar>{task}</Spar>
-            <SBtn>Done</SBtn>
+            <SBtn onClick={() => dispatch(deleteTask(task))}>Done</SBtn>
             <SDBtn>Delete</SDBtn>
           </SList>
         ))}
