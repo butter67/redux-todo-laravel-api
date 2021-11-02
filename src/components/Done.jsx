@@ -1,20 +1,27 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { backTask } from "../TasksSlice";
 
 export const Done = () => {
-  const task = useSelector((state) => state.tasks.done);
+  const task = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+
+  const onClickBack = (con) => {
+    dispatch(backTask(con));
+  };
 
   return (
     <STaskArea>
       <STaskttl>Done Tasks</STaskttl>
       <ul>
-        {task.map((task, i) => (
-          <SList key={i}>
-            <Spar>{task.content}</Spar>
-            <SBtn>Back</SBtn>
-            <SDBtn>Delete</SDBtn>
-          </SList>
-        ))}
+        {task
+          .filter((task) => task.comp === true)
+          .map((task, i) => (
+            <SList key={i}>
+              <Spar>{task.content}</Spar>
+              <SBtn onClick={() => onClickBack(task.content)}>Back</SBtn>
+            </SList>
+          ))}
       </ul>
     </STaskArea>
   );
@@ -59,22 +66,5 @@ const SBtn = styled.button`
     cursor: pointer;
     opacity: 0.8;
     transition: 0.2s all;
-  }
-`;
-const SDBtn = styled.button`
-  height: 40px;
-  min-width: 60px;
-  margin: 0px 4px;
-  border-radius: 10px;
-  border: none;
-  background: #d4acad;
-  color: white;
-  font-weight: bold;
-  transition: 0.2s all;
-  font-family: "Cabin", sans-serif;
-  &:hover {
-    opacity: 0.8;
-    transition: 0.2s all;
-    cursor: pointer;
   }
 `;

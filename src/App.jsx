@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { Input } from "./components/Input";
 import { Undone } from "./components/Undone";
-// import { Done } from "./components/Done";
+import { Done } from "./components/Done";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Input />
         <SWrap>
           <Undone />
-          {/* <Done /> */}
+          <Done />
         </SWrap>
       </SApp>
     </>

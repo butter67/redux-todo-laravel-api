@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { TasksSlice } from "../TasksSlice";
 import { addStore } from "../TasksSlice";
 
 export const Input = () => {
@@ -13,7 +12,8 @@ export const Input = () => {
   };
 
   const onAddStore = () => {
-    dispatch(addStore(val));
+    if (!val) return;
+    dispatch(addStore({ content: val, comp: false }));
     setVal("");
   };
 

@@ -1,27 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = ["Get some coffee beans", "Go to the supermarket"];
-
-// const initialState = [
-//   {
-//     id: 1,
-//     text: "Get some coffee beans",
-//   },
-//   {
-//     id: 2,
-//     text: "Go to the supermarket",
-//   },
-// ];
-// const initialState = {
-//   undone: [
-//     { id: 1, content: "Get some coffee beans" },
-//     { id: 2, content: "Go to the supermarket" },
-//   ],
-//   done: [
-//     { id: 3, content: "Go to the bank" },
-//     { id: 4, content: "Pick my son up" },
-//   ],
-// };
+const initialState = [
+  // { content: "Get some coffee beans", comp: false },
+  // { content: "Go to the supermarket", comp: false },
+  // { content: "Pick my son up", comp: true },
+];
 
 export const TasksSlice = createSlice({
   name: "content",
@@ -30,24 +13,39 @@ export const TasksSlice = createSlice({
   reducers: {
     //タスクの追加
     addStore: (state, action) => [...state, action.payload],
-    // {
-    //   state.tasks.id++;
-    //   const newTask = {
-    //     id: state.tasks.id,
-    //     text: action.payload,
-    //   };
-    //   state.tasks = [newTask, ...state.tasks];
-    // },
+
     //タスクの削除
     deleteTask: (state, action) => {
-      state.tasks = state.tasks.filter((task) => task !== action.payload);
+      console.log(action.payload);
+      const newTask = [...state];
+      newTask.splice(action.payload, 1);
+      return newTask;
+    },
 
-      // const newTasks = [...state];
-      // newTasks.splice(index, 1);
-      // state.tasks = newTasks;
+    //タスクの完了flugを立てる
+    moveTask: (state, action) => {
+      console.log(action.payload);
+      const moveTasks = [...state];
+      moveTasks.map((task) => {
+        if (task.content === action.payload) {
+          task.comp = true;
+        }
+        return task;
+      });
+    },
+
+    //タスクを未完了に戻す
+    backTask: (state, action) => {
+      const newDoneTasks = [...state];
+      newDoneTasks.map((task) => {
+        if (task.content === action.payload) {
+          task.comp = false;
+        }
+        return task;
+      });
     },
   },
 });
 
-export const { addStore, deleteTask } = TasksSlice.actions;
+export const { addStore, deleteTask, moveTask, backTask } = TasksSlice.actions;
 export default TasksSlice.reducer;
