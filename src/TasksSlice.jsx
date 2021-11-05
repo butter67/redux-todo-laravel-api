@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
-  // { content: "Get some coffee beans", comp: false },
-  // { content: "Go to the supermarket", comp: false },
-  // { content: "Pick my son up", comp: true },
+  // { content: "Get some coffee beans", completed: false },
+  // { content: "Go to the supermarket", completed: false },
+  // { content: "Pick my son up", completed: true },
 ];
 
 export const TasksSlice = createSlice({
@@ -16,7 +16,6 @@ export const TasksSlice = createSlice({
 
     //タスクの削除
     deleteTask: (state, action) => {
-      console.log(action.payload);
       const newTask = [...state];
       newTask.splice(action.payload, 1);
       return newTask;
@@ -24,11 +23,10 @@ export const TasksSlice = createSlice({
 
     //タスクの完了flugを立てる
     moveTask: (state, action) => {
-      console.log(action.payload);
       const moveTasks = [...state];
       moveTasks.map((task) => {
-        if (task.content === action.payload) {
-          task.comp = true;
+        if (task.title === action.payload) {
+          task.completed = true;
         }
         return task;
       });
@@ -38,8 +36,8 @@ export const TasksSlice = createSlice({
     backTask: (state, action) => {
       const newDoneTasks = [...state];
       newDoneTasks.map((task) => {
-        if (task.content === action.payload) {
-          task.comp = false;
+        if (task.title === action.payload) {
+          task.completed = false;
         }
         return task;
       });

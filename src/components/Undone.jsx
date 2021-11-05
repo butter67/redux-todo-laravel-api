@@ -21,11 +21,11 @@ export const Undone = () => {
       <STaskttl>Undone Tasks</STaskttl>
       <ul>
         {task
-          .filter((task) => task.comp === false)
+          .filter((task) => task.completed === false)
           .map((task, i) => (
             <SList key={i}>
-              <Spar>{task.content}</Spar>
-              <SBtn onClick={() => onDone(task.content)}>Done</SBtn>
+              <Spar>{task.title}</Spar>
+              <SBtn onClick={() => onDone(task.title)}>Done</SBtn>
               <SDBtn onClick={() => onDeleteTask(i)}>Delete</SDBtn>
             </SList>
           ))}

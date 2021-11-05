@@ -13,7 +13,7 @@ export const Input = () => {
 
   const onAddStore = () => {
     if (!val) return;
-    dispatch(addStore({ content: val, comp: false }));
+    dispatch(addStore({ title: val, completed: false }));
     setVal("");
   };
 
