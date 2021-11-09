@@ -1,16 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  // { content: "Get some coffee beans", completed: false },
-  // { content: "Go to the supermarket", completed: false },
-  // { content: "Pick my son up", completed: true },
-];
+// const initialState = [
+// { content: "Get some coffee beans", completed: false },
+// { content: "Go to the supermarket", completed: false },
+// { content: "Pick my son up", completed: true },
+// ];
 
 export const TasksSlice = createSlice({
-  name: "content",
-  initialState,
+  name: "tasks",
+
+  initialState: [],
 
   reducers: {
+    //set users
+    setUsers: (state, action) => {
+      state.users = action.payload;
+    },
     //タスクの追加
     addStore: (state, action) => [...state, action.payload],
 
@@ -27,9 +32,23 @@ export const TasksSlice = createSlice({
       moveTasks.map((task) => {
         if (task.title === action.payload) {
           task.completed = true;
+          moveTasks.splice(task, 1);
         }
-        return task;
+        return moveTask;
       });
+      // const moveTasks = [...state];
+      // moveTasks.map((task) => {
+      //   if (task.title === action.payload) {
+      //     const target = task;
+
+      //     target.completed = true;
+      //     moveTasks.splice(target, 1);
+      //   }
+
+      //   const newUnDone = [...moveTasks];
+      //   console.log(newUnDone);
+      //   return newUnDone;
+      // });
     },
 
     //タスクを未完了に戻す
@@ -45,5 +64,19 @@ export const TasksSlice = createSlice({
   },
 });
 
-export const { addStore, deleteTask, moveTask, backTask } = TasksSlice.actions;
+export const getUsers = () => {
+  return async (dispatch) => {
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
+    const data = await res.json();
+    dispatch(setUsers(data));
+  };
+};
+
+export const {
+  addStore,
+  deleteTask,
+  moveTask,
+  backTask,
+  setUsers,
+} = TasksSlice.actions;
 export default TasksSlice.reducer;

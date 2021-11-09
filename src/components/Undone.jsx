@@ -1,18 +1,18 @@
 import styled from "styled-components";
+
 import { useSelector, useDispatch } from "react-redux";
-import { deleteTask, moveTask } from "../TasksSlice";
+import { deleteTask, moveTask, setUsers, getUsers } from "../TasksSlice";
 
 export const Undone = () => {
   const task = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
-
-  // console.log(task);
+  // const { users} = useSelector((state) => state.users)
 
   const onDeleteTask = (i) => {
     dispatch(deleteTask(i));
   };
-  const onDone = (con) => {
-    dispatch(moveTask(con));
+  const onDone = (cont) => {
+    dispatch(moveTask(cont));
     // console.log(i);
   };
 

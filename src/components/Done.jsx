@@ -4,7 +4,7 @@ import { backTask } from "../TasksSlice";
 
 export const Done = () => {
   const task = useSelector((state) => state.tasks);
-  const taskRev = task.slice().reverse();
+  // const taskRev = task.slice().reverse();
   const dispatch = useDispatch();
 
   const onClickBack = (con) => {
@@ -15,7 +15,7 @@ export const Done = () => {
     <STaskArea>
       <STaskttl>Done Tasks</STaskttl>
       <ul>
-        {taskRev
+        {task
           .filter((task) => task.completed === true)
           .map((task, i) => (
             <SList key={task.title}>

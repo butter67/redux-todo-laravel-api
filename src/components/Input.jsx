@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addStore } from "../TasksSlice";
 
@@ -16,6 +17,13 @@ export const Input = () => {
     dispatch(addStore({ title: val, completed: false }));
     setVal("");
   };
+
+  // useEffect(() => { //works
+  //   axios
+  //     .get("https://jsonplaceholder.typicode.com/users")
+  //     .then((response) => console.log(response.data))
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   return (
     <SInputArea>
