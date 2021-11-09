@@ -4,28 +4,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteTask, moveTask, setUsers, getUsers } from "../TasksSlice";
 
 export const Undone = () => {
-  const task = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.tasks.undone);
+
   const dispatch = useDispatch();
-  // const { users} = useSelector((state) => state.users)
 
   const onDeleteTask = (i) => {
     dispatch(deleteTask(i));
   };
-  const onDone = (cont) => {
-    dispatch(moveTask(cont));
-    // console.log(i);
+  const onDone = (i) => {
+    dispatch(moveTask(i));
   };
 
   return (
     <STaskArea>
       <STaskttl>Undone Tasks</STaskttl>
       <ul>
-        {task
-          .filter((task) => task.completed === false)
+        {tasks
+          // .filter((task) => task.completed === false)
           .map((task, i) => (
             <SList key={i}>
-              <Spar>{task.title}</Spar>
-              <SBtn onClick={() => onDone(task.title)}>Done</SBtn>
+              <Spar>{task.content}</Spar>
+              <SBtn onClick={() => onDone(i)}>Done</SBtn>
               <SDBtn onClick={() => onDeleteTask(i)}>Delete</SDBtn>
             </SList>
           ))}

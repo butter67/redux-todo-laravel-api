@@ -14,16 +14,9 @@ export const Input = () => {
 
   const onAddStore = () => {
     if (!val) return;
-    dispatch(addStore({ title: val, completed: false }));
+    dispatch(addStore({ content: val, completed: false }));
     setVal("");
   };
-
-  // useEffect(() => { //works
-  //   axios
-  //     .get("https://jsonplaceholder.typicode.com/users")
-  //     .then((response) => console.log(response.data))
-  //     .catch((error) => console.log(error));
-  // }, []);
 
   return (
     <SInputArea>

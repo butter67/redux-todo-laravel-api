@@ -1,66 +1,64 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const initialState = [
-// { content: "Get some coffee beans", completed: false },
-// { content: "Go to the supermarket", completed: false },
-// { content: "Pick my son up", completed: true },
-// ];
+const initialState = {
+  undone: [
+    { content: "Get some coffee beans", completed: false },
+    { content: "Go to the supermarket", completed: false },
+    { content: "Watch the movie", completed: false },
+  ],
+  done: [
+    { content: "Pick my son up", completed: true },
+    { content: "Pick my mom up", completed: true },
+  ],
+};
 
 export const TasksSlice = createSlice({
   name: "tasks",
 
-  initialState: [],
-
+  initialState,
   reducers: {
-    //set users
-    setUsers: (state, action) => {
-      state.users = action.payload;
-    },
     //タスクの追加
-    addStore: (state, action) => [...state, action.payload],
+    addStore: (state, action) => {
+      return {
+        undone: [...state.undone, action.payload],
+        done: [...state.done],
+      };
+    },
 
     //タスクの削除
     deleteTask: (state, action) => {
-      const newTask = [...state];
-      newTask.splice(action.payload, 1);
-      return newTask;
+      const i = action.payload;
+      const newTasks = [...state.undone];
+      newTasks.splice(i, 1);
+      return {
+        undone: [...newTasks],
+        done: [...state.done],
+      };
     },
 
-    //タスクの完了flugを立てる
+    //タスクの完了でDone Tasksに移動する
     moveTask: (state, action) => {
-      const moveTasks = [...state];
-      moveTasks.map((task) => {
-        if (task.title === action.payload) {
-          task.completed = true;
-          moveTasks.splice(task, 1);
-        }
-        return moveTask;
-      });
-      // const moveTasks = [...state];
-      // moveTasks.map((task) => {
-      //   if (task.title === action.payload) {
-      //     const target = task;
+      const index = action.payload; //contetのindexを受け取ってる
+      console.log(index);
 
-      //     target.completed = true;
-      //     moveTasks.splice(target, 1);
-      //   }
+      const moveTasks = [...state.undone];
+      const keshitai = moveTasks[index].content;
+      // const res = moveTasks[index].filter((task) => task.index === index);
+      // console.log(res);
 
-      //   const newUnDone = [...moveTasks];
-      //   console.log(newUnDone);
-      //   return newUnDone;
+      console.log(keshitai);
+
+      moveTasks.splice(index, 1);
+
+      return {
+        undone: [...moveTasks],
+        done: [...state.done, keshitai],
+      };
       // });
     },
 
     //タスクを未完了に戻す
-    backTask: (state, action) => {
-      const newDoneTasks = [...state];
-      newDoneTasks.map((task) => {
-        if (task.title === action.payload) {
-          task.completed = false;
-        }
-        return task;
-      });
-    },
+    backTask: (state, action) => {},
   },
 });
 

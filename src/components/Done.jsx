@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { backTask } from "../TasksSlice";
 
 export const Done = () => {
-  const task = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.tasks.done);
   // const taskRev = task.slice().reverse();
   const dispatch = useDispatch();
 
@@ -15,12 +15,12 @@ export const Done = () => {
     <STaskArea>
       <STaskttl>Done Tasks</STaskttl>
       <ul>
-        {task
-          .filter((task) => task.completed === true)
+        {tasks
+          // .filter((task) => task.completed === true)
           .map((task, i) => (
-            <SList key={task.title}>
-              <Spar>{task.title}</Spar>
-              <SBtn onClick={() => onClickBack(task.title)}>Back</SBtn>
+            <SList key={i}>
+              <Spar>{task.content}</Spar>
+              <SBtn onClick={() => onClickBack(task.content)}>Back</SBtn>
             </SList>
           ))}
       </ul>
