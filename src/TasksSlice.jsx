@@ -6,10 +6,7 @@ const initialState = {
     { content: "Go to the supermarket", completed: false },
     { content: "Watch the movie", completed: false },
   ],
-  done: [
-    { content: "Pick my son up", completed: true },
-    { content: "Pick my mom up", completed: true },
-  ],
+  done: [{ content: "Pick my son up", completed: true }],
 };
 
 export const TasksSlice = createSlice({
@@ -38,27 +35,33 @@ export const TasksSlice = createSlice({
 
     //タスクの完了でDone Tasksに移動する
     moveTask: (state, action) => {
-      const index = action.payload; //contetのindexを受け取ってる
-      console.log(index);
-
+      const target = action.payload;
       const moveTasks = [...state.undone];
-      const keshitai = moveTasks[index].content;
-      // const res = moveTasks[index].filter((task) => task.index === index);
-      // console.log(res);
-
-      console.log(keshitai);
-
-      moveTasks.splice(index, 1);
+      moveTasks.map((task) => {
+        if (task.content !== target.content) {
+          return moveTasks;
+        }
+        moveTasks.splice(task, 1);
+        return moveTasks;
+      });
 
       return {
         undone: [...moveTasks],
-        done: [...state.done, keshitai],
+        done: [...state.done, target],
       };
-      // });
     },
 
     //タスクを未完了に戻す
-    backTask: (state, action) => {},
+    backTask: (state, action) => {
+      const doneTask = [...state.done];
+      console.log(action.payload);
+      doneTask.splice(action.payload, 1);
+
+      return {
+        undone: [...state.undone, action.payload],
+        done: [...doneTask],
+      };
+    },
   },
 });
 

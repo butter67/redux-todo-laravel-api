@@ -7,8 +7,8 @@ export const Done = () => {
   // const taskRev = task.slice().reverse();
   const dispatch = useDispatch();
 
-  const onClickBack = (con) => {
-    dispatch(backTask(con));
+  const onClickBack = (task) => {
+    dispatch(backTask(task));
   };
 
   return (
@@ -20,7 +20,7 @@ export const Done = () => {
           .map((task, i) => (
             <SList key={i}>
               <Spar>{task.content}</Spar>
-              <SBtn onClick={() => onClickBack(task.content)}>Back</SBtn>
+              <SBtn onClick={() => onClickBack(task)}>Back</SBtn>
             </SList>
           ))}
       </ul>

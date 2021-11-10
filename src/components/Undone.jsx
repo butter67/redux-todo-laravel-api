@@ -11,8 +11,8 @@ export const Undone = () => {
   const onDeleteTask = (i) => {
     dispatch(deleteTask(i));
   };
-  const onDone = (i) => {
-    dispatch(moveTask(i));
+  const onDone = (task) => {
+    dispatch(moveTask(task));
   };
 
   return (
@@ -24,7 +24,7 @@ export const Undone = () => {
           .map((task, i) => (
             <SList key={i}>
               <Spar>{task.content}</Spar>
-              <SBtn onClick={() => onDone(i)}>Done</SBtn>
+              <SBtn onClick={() => onDone(task)}>Done</SBtn>
               <SDBtn onClick={() => onDeleteTask(i)}>Delete</SDBtn>
             </SList>
           ))}
