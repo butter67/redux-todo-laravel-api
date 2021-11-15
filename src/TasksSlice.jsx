@@ -2,11 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   undone: [
-    { content: "Get some coffee beans", completed: false },
-    { content: "Go to the supermarket", completed: false },
-    { content: "Watch the movie", completed: false },
+    { content: "1Hello", completed: false },
+    { content: "2Hey!", completed: false },
+    { content: "3Hola~", completed: false },
+    { content: "4Yoh!", completed: false },
   ],
-  done: [{ content: "Pick my son up", completed: true }],
+  done: [{ content: "5", completed: false }],
 };
 
 export const TasksSlice = createSlice({
@@ -37,29 +38,30 @@ export const TasksSlice = createSlice({
     moveTask: (state, action) => {
       const target = action.payload;
       const moveTasks = [...state.undone];
-      moveTasks.map((task) => {
-        if (task.content !== target.content) {
-          return moveTasks;
-        }
-        moveTasks.splice(task, 1);
-        return moveTasks;
-      });
+      console.log(target);
+      console.log(target.index);
+      console.log(target.taskObject.content);
+      moveTasks.splice(target.index, 1);
+
+      const doneTasks = [...state.done, target.taskObject];
 
       return {
         undone: [...moveTasks],
-        done: [...state.done, target],
+        done: [...doneTasks],
       };
     },
 
     //タスクを未完了に戻す
     backTask: (state, action) => {
-      const doneTask = [...state.done];
-      console.log(action.payload);
-      doneTask.splice(action.payload, 1);
+      const target = action.payload;
+      const newDoneTasks = [...state.done];
+      newDoneTasks.splice(target.index, 1);
+
+      const newUndoneTasks = [...state.undone, target.taskObject];
 
       return {
-        undone: [...state.undone, action.payload],
-        done: [...doneTask],
+        undone: [...newUndoneTasks],
+        done: [...newDoneTasks],
       };
     },
   },
