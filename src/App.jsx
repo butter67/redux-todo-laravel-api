@@ -1,10 +1,24 @@
 import styled from "styled-components";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import { Input } from "./components/Input";
 import { Undone } from "./components/Undone";
 import { Done } from "./components/Done";
+import { getContents } from "./ApiSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getContents());
+  }, []);
+
+  // useEffect(() => {
+  //   const $res = getContents();
+  //   console.log($res);
+  //   // dispatch(addContents($res));
+  // }, []);
+
   return (
     <>
       <SApp>

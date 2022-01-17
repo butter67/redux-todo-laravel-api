@@ -1,10 +1,9 @@
 import styled from "styled-components";
-
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTask, moveTask, setUsers, getUsers } from "../TasksSlice";
 
 export const Undone = () => {
-  const tasks = useSelector((state) => state.tasks.undone);
+  const tasks = useSelector((state) => state.api.tasks);
 
   const dispatch = useDispatch();
 
@@ -20,7 +19,7 @@ export const Undone = () => {
       <STaskttl>Undone Tasks</STaskttl>
       <ul>
         {tasks
-          // .filter((task) => task.completed === false)
+          .filter((task) => task.completed == false)
           .map((task, i) => (
             <SList key={i}>
               <Spar>{task.content}</Spar>

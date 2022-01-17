@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { dispatch } from "react-redux";
+import axios from "axios";
 
 const initialState = {
   undone: [
@@ -67,19 +69,14 @@ export const TasksSlice = createSlice({
   },
 });
 
-export const getUsers = () => {
-  return async (dispatch) => {
-    const res = await fetch("https://jsonplaceholder.typicode.com/users");
-    const data = await res.json();
-    dispatch(setUsers(data));
-  };
-};
+// export const getUsers = () => {
+//   return async (dispatch) => {
+//     const res = await fetch("https://jsonplaceholder.typicode.com/users");
+//     const data = await res.json();
+//     dispatch(setUsers(data));
+//   };
+// };
 
-export const {
-  addStore,
-  deleteTask,
-  moveTask,
-  backTask,
-  setUsers,
-} = TasksSlice.actions;
+export const { addStore, deleteTask, moveTask, backTask, setUsers } =
+  TasksSlice.actions;
 export default TasksSlice.reducer;
