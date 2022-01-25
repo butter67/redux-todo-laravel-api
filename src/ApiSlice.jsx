@@ -12,10 +12,33 @@ export const getContents = createAsyncThunk("fetch/get", async () => {
   return res.data;
 });
 
+//----
+
 export const ApiSlice = createSlice({
   name: "api",
   initialState,
-  reducers: {},
+  reducers: {
+    addStoreApi: (state, action) => {
+      return {
+        tasks: action.payload,
+      };
+    },
+    updateTaskApi: (state, action) => {
+      return {
+        tasks: action.payload,
+      };
+    },
+    updateReverseTaskApi: (state, action) => {
+      return {
+        tasks: action.payload,
+      };
+    },
+    deleteTaskApi: (state, action) => {
+      return {
+        tasks: action.payload,
+      };
+    },
+  },
 
   extraReducers: {
     [getContents.pending]: (state, action) => {
@@ -23,24 +46,7 @@ export const ApiSlice = createSlice({
     },
     [getContents.fulfilled]: (state, action) => {
       state.status = "success";
-      console.log(action.payload);
-      //   const res = action.payload;
-      //   res.map(
-      // (res) => {
-      //   if (res.completed == false) {
-      //     console.log("This is false");
-      //     state.undone = res;
-      //   } else {
-      //     console.log("This is true");
-      //     state.done = res;
-      //   }
-      //   return res;
-      // }
-      //   -----------
-      // (res) =>
-      //   res.completed == false ? (state.undone = res) : (state.done = res)
-      //   );
-
+      // console.log(action.payload);
       state.tasks = action.payload;
     },
     [getContents.rejected]: (state, action) => {
@@ -49,5 +55,10 @@ export const ApiSlice = createSlice({
     },
   },
 });
-
+export const {
+  addStoreApi,
+  deleteTaskApi,
+  updateTaskApi,
+  updateReverseTaskApi,
+} = ApiSlice.actions;
 export default ApiSlice.reducer;

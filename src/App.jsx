@@ -1,33 +1,63 @@
 import styled from "styled-components";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { Input } from "./components/Input";
-import { Undone } from "./components/Undone";
-import { Done } from "./components/Done";
+import { useState, useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { getContents } from "./ApiSlice";
+import { Login } from "./components/auth/Login";
+import axios from "axios";
+import { TopField } from "./components/field/TopField";
 
 function App() {
+  const [user, setUser] = useState();
+  const loginUser = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getContents());
+  const navigate = useNavigate();
+
+  const getUser = useCallback(() => {
+    axios
+      .get("http://redux-todo-api.test/api/user")
+      .then((res) => {
+        alert("[getUser]ログイン済み");
+        console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        alert("[getUser]ログインしてません");
+        navigate("/login");
+      });
   }, []);
 
-  // useEffect(() => {
-  //   const $res = getContents();
-  //   console.log($res);
-  //   // dispatch(addContents($res));
-  // }, []);
+  //ログイン済みかの判定
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
+
+  useEffect(() => {
+    dispatch(getContents());
+  }, [dispatch]);
 
   return (
     <>
       <SApp>
         <STtl>Todo App Width Redux</STtl>
-        <Input />
-        <SWrap>
-          <Undone />
-          <Done />
-        </SWrap>
+        {/* <TopField /> */}
+        <Routes>
+          {user ? (
+            <>
+              {/* <TopField /> */}
+              <Route path="/user" element={<TopField />} />
+            </>
+          ) : (
+            <>
+              <Route path="/login" element={<Login />} />
+            </>
+          )}
+        </Routes>
       </SApp>
     </>
   );
@@ -44,14 +74,6 @@ const SApp = styled.div`
   max-width: 80%;
   padding: 40px 0px;
 `;
-
-const SWrap = styled.div`
-  display: flex;
-  width: 980px;
-  justify-content: space-between;
-  margin-top: 40px;
-`;
-
 const STtl = styled.h1`
   font-family: "Nothing You Could Do", cursive;
   font-size: 38px;

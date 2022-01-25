@@ -1,14 +1,29 @@
 import styled from "styled-components";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { backTask } from "../TasksSlice";
+import { updateReverseTaskApi } from "../ApiSlice";
 
 export const Done = () => {
   const tasks = useSelector((state) => state.api.tasks);
   // const taskRev = task.slice().reverse();
   const dispatch = useDispatch();
 
-  const onClickBack = (i, task) => {
-    dispatch(backTask({ index: i, taskObject: task }));
+  // const onClickBack = (i, task) => {
+  //   dispatch(backTask({ index: i, taskObject: task }));
+  // };
+
+  const onClickBack = (id) => {
+    axios
+      .post("http://redux-todo-api.test/api/reverse", {
+        id: id,
+      })
+      .then((res) => {
+        dispatch(updateReverseTaskApi(res.data));
+      })
+      .catch((error) => {
+        alert("NOT sucsessed!!");
+      });
   };
 
   return (
@@ -20,7 +35,7 @@ export const Done = () => {
           .map((task, i) => (
             <SList key={i}>
               <Spar>{task.content}</Spar>
-              <SBtn onClick={() => onClickBack(i, task)}>Back</SBtn>
+              <SBtn onClick={() => onClickBack(task.id)}>Back</SBtn>
             </SList>
           ))}
       </ul>

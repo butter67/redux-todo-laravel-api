@@ -1,17 +1,37 @@
 import styled from "styled-components";
+import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteTask, moveTask, setUsers, getUsers } from "../TasksSlice";
+import { deleteTaskApi, updateTaskApi } from "../ApiSlice";
 
 export const Undone = () => {
   const tasks = useSelector((state) => state.api.tasks);
 
   const dispatch = useDispatch();
 
-  const onDeleteTask = (i) => {
-    dispatch(deleteTask(i));
+  const onDeleteTask = (id) => {
+    axios
+      .post("http://redux-todo-api.test/api/del", {
+        id: id,
+      })
+      .then((res) => {
+        dispatch(deleteTaskApi(res.data));
+      })
+      .catch((error) => {
+        alert("NOT sucsessed!!");
+      });
   };
-  const onDone = (i, task) => {
-    dispatch(moveTask({ index: i, taskObject: task }));
+
+  const onDone = (id) => {
+    axios
+      .post("http://redux-todo-api.test/api/update", {
+        id: id,
+      })
+      .then((res) => {
+        dispatch(updateTaskApi(res.data));
+      })
+      .catch((error) => {
+        alert("NOT sucsessed!!");
+      });
   };
 
   return (
@@ -23,8 +43,9 @@ export const Undone = () => {
           .map((task, i) => (
             <SList key={i}>
               <Spar>{task.content}</Spar>
-              <SBtn onClick={() => onDone(i, task)}>Done</SBtn>
-              <SDBtn onClick={() => onDeleteTask(i)}>Delete</SDBtn>
+              {/* <SBtn onClick={() => onDone(i, task)}>Done</SBtn> */}
+              <SBtn onClick={() => onDone(task.id)}>Done</SBtn>
+              <SDBtn onClick={() => onDeleteTask(task.id)}>Delete</SDBtn>
             </SList>
           ))}
       </ul>

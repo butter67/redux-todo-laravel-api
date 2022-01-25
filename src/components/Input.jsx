@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addStore } from "../TasksSlice";
+import { addStoreApi, createContent } from "../ApiSlice";
 
 export const Input = () => {
   const [val, setVal] = useState("");
@@ -12,10 +13,22 @@ export const Input = () => {
     setVal(() => e.target.value);
   };
 
-  const onAddStore = () => {
-    if (!val) return;
-    dispatch(addStore({ content: val, completed: false }));
-    setVal("");
+  const createNewContents = (val) => {
+    if (!val) {
+      return;
+    }
+    axios
+      .post("http://redux-todo-api.test/api/api-store", {
+        content: val,
+        coompleted: false,
+      })
+      .then((res) => {
+        dispatch(addStoreApi(res.data));
+        setVal("");
+      })
+      .catch((error) => {
+        alert("NOT sucsessed!!");
+      });
   };
 
   return (
@@ -25,7 +38,7 @@ export const Input = () => {
         onChange={handleChange}
         placeholder="Add something here!"
       />
-      <SAddBtn onClick={() => onAddStore(val)}>Add</SAddBtn>
+      <SAddBtn onClick={() => createNewContents(val)}>Add</SAddBtn>
     </SInputArea>
   );
 };
