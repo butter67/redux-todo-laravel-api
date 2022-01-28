@@ -13,7 +13,6 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const getLoginUser = (email, password) => {
-    // axios.get("/sanctum/csrf-cookie").then((response) => {
     axios
       .post("http://redux-todo-api.test/api/login", {
         email,
@@ -23,13 +22,12 @@ export const Login = () => {
         console.log(res.data);
         alert("ログインしました！");
         dispatch(setLoginUser(res.data));
-        navigate("/user");
+        navigate("/field");
       })
       .catch((err) => {
         console.log(email, password);
         alert("ログイン失敗です");
       });
-    // });
   };
 
   return (

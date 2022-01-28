@@ -9,24 +9,19 @@ export const AuthUserSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    storeNewUser: (state, action) => {
+      state.user = action.payload.user;
+      console.log(action.payload);
+    },
     setLoginUser: (state, action) => {
       state.user = action.payload;
     },
+    setLoggedInUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
-  extraReducers: {
-    // [getUser.pending]: (state, action) => {
-    //   state.status = "loading";
-    // },
-    // [getUser.fulfilled]: (state, action) => {
-    //   state.status = "success";
-    //   // console.log(action.payload);
-    //   state.user = action.payload;
-    // },
-    // [getUser.rejected]: (state, action) => {
-    //   state.status = "failed";
-    //   alert("No One found!");
-    // },
-  },
+  extraReducers: {},
 });
-export const { setLoginUser } = AuthUserSlice.actions;
+export const { setLoginUser, storeNewUser, setLoggedInUser } =
+  AuthUserSlice.actions;
 export default AuthUserSlice.reducer;

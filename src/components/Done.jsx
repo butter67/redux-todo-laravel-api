@@ -6,12 +6,15 @@ import { updateReverseTaskApi } from "../ApiSlice";
 
 export const Done = () => {
   const tasks = useSelector((state) => state.api.tasks);
-  // const taskRev = task.slice().reverse();
   const dispatch = useDispatch();
-
-  // const onClickBack = (i, task) => {
-  //   dispatch(backTask({ index: i, taskObject: task }));
-  // };
+  // const loggedUserId = useSelector((state) => state.user.user.id);
+  // const usersTasks = tasks.filter((task) => {
+  //   if (task.id === loggedUserId) {
+  //     return task;
+  //   }
+  // });
+  // console.log(loggedUserId);
+  // console.log(usersTasks);
 
   const onClickBack = (id) => {
     axios

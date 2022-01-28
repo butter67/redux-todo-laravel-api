@@ -6,10 +6,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { Input } from "../Input";
 import { Undone } from "../Undone";
 import { Done } from "../Done";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const TopField = () => {
   const dispatch = useDispatch();
   const userName = useSelector((state) => state.user.user.name);
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    localStorage.removeItem("jwt");
+    alert("ログアウトしました");
+    navigate("/register");
+  };
 
   useEffect(() => {
     dispatch(getContents());
@@ -18,6 +26,7 @@ export const TopField = () => {
   return (
     <>
       <h3>こんにちは、{userName}さん！</h3>
+      <button onClick={() => logOut()}>Log Out</button>
       <Input />
       <SWrap>
         <Undone />

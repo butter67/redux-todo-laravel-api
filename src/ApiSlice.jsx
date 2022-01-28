@@ -11,6 +11,10 @@ export const getContents = createAsyncThunk("fetch/get", async () => {
   const res = await axios.get("http://redux-todo-api.test/api");
   return res.data;
 });
+// export const getContents = createAsyncThunk("fetch/get", async () => {
+//   const res = await axios.get("http://redux-todo-api.test/api");
+//   return res.data;
+// });
 
 //----
 

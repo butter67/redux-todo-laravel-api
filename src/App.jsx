@@ -1,34 +1,40 @@
 import styled from "styled-components";
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { getContents } from "./ApiSlice";
 import { Login } from "./components/auth/Login";
+import { Register } from "./components/auth/Register";
 import axios from "axios";
 import { TopField } from "./components/field/TopField";
+import { setLoggedInUser } from "./AuthUserSlice";
 
 function App() {
+  const token = localStorage.getItem("jwt");
+
   const [user, setUser] = useState();
+  const [jwt, setJwt] = useState(token || null);
   const loginUser = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const getUser = useCallback(() => {
     axios
-      .get("http://redux-todo-api.test/api/user")
+      .get("http://redux-todo-api.test/api/user/", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
       .then((res) => {
         alert("[getUser]ログイン済み");
         console.log(res.data);
         setUser(res.data);
+        dispatch(setLoggedInUser(res.data));
+        navigate("/field");
       })
       .catch((err) => {
         alert("[getUser]ログインしてません");
-        navigate("/login");
+        navigate("/register");
       });
   }, []);
 
@@ -45,18 +51,9 @@ function App() {
     <>
       <SApp>
         <STtl>Todo App Width Redux</STtl>
-        {/* <TopField /> */}
         <Routes>
-          {user ? (
-            <>
-              {/* <TopField /> */}
-              <Route path="/user" element={<TopField />} />
-            </>
-          ) : (
-            <>
-              <Route path="/login" element={<Login />} />
-            </>
-          )}
+          <Route path="/field" element={<TopField />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </SApp>
     </>
