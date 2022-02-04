@@ -44,7 +44,10 @@ export const Register = () => {
       .then((res) => {
         console.log(res.data);
         alert("ログインしました！");
-        dispatch(setLoginUser(res.data));
+        dispatch(setLoginUser(res.data.user));
+        const token = res.data.access_token;
+        localStorage.setItem("jwt", token);
+        alert("Tokenセットしました！");
         navigate("/field");
       })
       .catch((err) => {

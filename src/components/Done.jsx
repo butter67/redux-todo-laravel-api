@@ -7,14 +7,12 @@ import { updateReverseTaskApi } from "../ApiSlice";
 export const Done = () => {
   const tasks = useSelector((state) => state.api.tasks);
   const dispatch = useDispatch();
-  // const loggedUserId = useSelector((state) => state.user.user.id);
-  // const usersTasks = tasks.filter((task) => {
-  //   if (task.id === loggedUserId) {
-  //     return task;
-  //   }
-  // });
-  // console.log(loggedUserId);
-  // console.log(usersTasks);
+  const loggedUserId = useSelector((state) => state.user.user.id);
+  const usersTasks = tasks.filter((task) => {
+    if (task.user_id == loggedUserId) {
+      return task;
+    }
+  });
 
   const onClickBack = (id) => {
     axios
@@ -33,11 +31,13 @@ export const Done = () => {
     <STaskArea>
       <STaskttl>Done Tasks</STaskttl>
       <ul>
-        {tasks
+        {usersTasks
           .filter((task) => task.completed == true)
           .map((task, i) => (
             <SList key={i}>
-              <Spar>{task.content}</Spar>
+              <Spar>
+                {task.user_id} : {task.content}
+              </Spar>
               <SBtn onClick={() => onClickBack(task.id)}>Back</SBtn>
             </SList>
           ))}

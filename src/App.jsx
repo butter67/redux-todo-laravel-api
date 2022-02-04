@@ -43,9 +43,9 @@ function App() {
     getUser();
   }, [getUser]);
 
-  useEffect(() => {
-    dispatch(getContents());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getContents());
+  // }, [dispatch]);
 
   return (
     <>

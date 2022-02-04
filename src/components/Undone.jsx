@@ -6,11 +6,11 @@ import { deleteTaskApi, updateTaskApi } from "../ApiSlice";
 export const Undone = () => {
   const tasks = useSelector((state) => state.api.tasks);
   const loggedUserId = useSelector((state) => state.user.user.id);
-  // const usersTasks = tasks.filter((task) => {
-  //   if (task.id == loggedUserId) {
-  //     return task;
-  //   }
-  // });
+  const usersTasks = tasks.filter((task) => {
+    if (task.user_id == loggedUserId) {
+      return task;
+    }
+  });
   console.log(loggedUserId);
 
   const dispatch = useDispatch();
@@ -45,11 +45,13 @@ export const Undone = () => {
     <STaskArea>
       <STaskttl>Undone Tasks</STaskttl>
       <ul>
-        {tasks
+        {usersTasks
           .filter((task) => task.completed == false)
           .map((task, i) => (
             <SList key={i}>
-              <Spar>{task.content}</Spar>
+              <Spar>
+                {task.user_id} : {task.content}
+              </Spar>
               <SBtn onClick={() => onDone(task.id)}>Done</SBtn>
               <SDBtn onClick={() => onDeleteTask(task.id)}>Delete</SDBtn>
             </SList>
